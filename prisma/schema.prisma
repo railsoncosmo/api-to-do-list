@@ -6,3 +6,12 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+model Todo {
+  id          String  @id @default(uuid())
+  description String
+  isCompleted Boolean @default(false)
+  url_image   String?
+
+  @@map("todos")
+}
