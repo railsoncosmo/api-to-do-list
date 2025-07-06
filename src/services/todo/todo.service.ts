@@ -18,17 +18,31 @@ export class TodoService {
     return allTodos;
   }
 
-  async updateTodo(data: UpdateTodo): Promise<Todo> {
-    if (!data.id) {
-      throw new AppError('Não foi possível atualizar a tarefa', 400);
+  async updateTodo({
+    id,
+    description,
+    isCompleted,
+    url_image,
+  }: UpdateTodo): Promise<Todo> {
+    const todoExists = await todoRepository.findById(id);
+
+    if (!todoExists) {
+      throw new AppError('Tarefa não encontrada.', 404);
     }
-    const todoUpdated = await todoRepository.update(data);
+    const todoUpdated = await todoRepository.update({
+      id,
+      description,
+      isCompleted,
+      url_image,
+    });
     return todoUpdated;
   }
 
   async deleteTodo(todo_id: string): Promise<void> {
-    if (!todo_id) {
-      throw new AppError('Não foi possível deletar a tarefa', 400);
+    const todoExists = await todoRepository.findById(todo_id);
+
+    if (!todoExists) {
+      throw new AppError('Tarefa não encontrada.', 404);
     }
     await todoRepository.delete(todo_id);
   }
