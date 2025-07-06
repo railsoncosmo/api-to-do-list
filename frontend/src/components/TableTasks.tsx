@@ -1,10 +1,8 @@
-import { Task } from '../hooks/useTasks';
+import useTaks from '../hooks/useTasks';
 
-interface TableProps {
-  data: Task[];
-}
+export const TableTasks = () => {
+  const { tasks } = useTaks();
 
-export const TableTasks = ({ data }: TableProps) => {
   return (
     <table className="min-w-full border-collapse border border-gray-300">
   <thead>
@@ -15,7 +13,7 @@ export const TableTasks = ({ data }: TableProps) => {
     </tr>
   </thead>
   <tbody>
-    {data.map((task) => (
+    {(tasks ?? []).map((task) => (
         <tr key={task.id}>
           <td className="border text- px-4 py-2">{task.id}</td>
           <td className="border px-4 py-2">{task.description}</td>
