@@ -1,8 +1,8 @@
-import { Todo } from '@prisma/client';
 import { prisma } from '../../config/client';
+import { Todo, CreateTodo } from '../../types/todo/todo.types';
 
 export class TodoRepository {
-  async create({ description, isCompleted, url_image }: Todo) {
+  async create({ description, isCompleted, url_image }: CreateTodo) {
     const todo = await prisma.todo.create({
       data: {
         description,
@@ -38,5 +38,14 @@ export class TodoRepository {
         id: todo_id,
       },
     });
+  }
+
+  async findById(todo_id: string) {
+    const todo = await prisma.todo.findUnique({
+      where: {
+        id: todo_id,
+      },
+    });
+    return todo;
   }
 }
