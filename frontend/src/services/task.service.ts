@@ -3,8 +3,17 @@ import { Task } from '../types/task';
 
 export const TaskService = {
 
-  create: async (data: Omit<Task, 'id'>): Promise<Task> => {
-    const response = await api.post('/todos', data);
+  create: async (task: string, image?: File): Promise<Task> => {
+    const formData = new FormData();
+    formData.append("description", task);
+      if (image) {
+    formData.append("url_image", image);
+    }
+    const response = await api.post('/todos', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
     return response.data;
   },
 
@@ -13,8 +22,10 @@ export const TaskService = {
     return response.data;
   },
 
-  update: async(id: string, data: Partial<Task>): Promise<Task> => {
-    const response = await api.put(`/todos/${id}`, data);
+  update: async(id: string, status?: boolean): Promise<Task> => {
+    const response = await api.put(`/todos/${id}`, {
+      isCompleted: !status,
+    });
     return response.data;
   },
 
