@@ -1,5 +1,5 @@
 import { prisma } from '../../config/client';
-import { Todo, CreateTodo } from '../../types/todo/todo.types';
+import { CreateTodo, UpdateTodo } from '../../types/todo/todo.types';
 
 export class TodoRepository {
   async create({ description, isCompleted, url_image }: CreateTodo) {
@@ -18,7 +18,7 @@ export class TodoRepository {
     return todos;
   }
 
-  async update({ id, description, isCompleted, url_image }: Todo) {
+  async update({ id, description, isCompleted, url_image }: UpdateTodo) {
     const todo = await prisma.todo.update({
       where: {
         id: id,
