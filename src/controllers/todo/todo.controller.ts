@@ -10,13 +10,13 @@ export class TodoController {
     const file = req.file;
     const url_image = file ? file.filename : null;
 
-    await todoService.createTodo({
+    const newTodo = await todoService.createTodo({
       description,
       isCompleted,
       url_image
     });
 
-    return res.status(201).json();
+    return res.status(201).json(newTodo);
   }
 
   async getAllTodos(_req: Request, res: Response) {

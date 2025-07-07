@@ -1,6 +1,5 @@
 import { useTasks } from '../hooks/useTasks';
 import { MdDelete } from "react-icons/md";
-import { FaEdit } from "react-icons/fa";
 
 export const TableTasks = () => {
   const { tasks, deleteTask, toggleTaskStatus } = useTasks();
@@ -44,9 +43,6 @@ export const TableTasks = () => {
                 onClick={() => deleteTask(task.id)}
               >
                 <MdDelete size={25} color='#8c161d'/>
-              </button>
-              <button>
-                <FaEdit size={25}/>
               </button>
             </div>
           </td>
